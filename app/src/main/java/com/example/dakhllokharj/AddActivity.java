@@ -70,6 +70,7 @@ public class AddActivity extends AppCompatActivity {
                         "", "", "", "",
                         amount));
                 disableEditMode();
+                onBackPressed();
                 break;
 
         }

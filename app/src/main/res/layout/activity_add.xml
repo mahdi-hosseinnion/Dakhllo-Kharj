@@ -28,7 +28,7 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="عنوان"
+        android:hint="عنوان"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBar_main" />
@@ -44,7 +44,7 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="number"
-        android:text="مبلغ"
+        android:hint="مبلغ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_title" />

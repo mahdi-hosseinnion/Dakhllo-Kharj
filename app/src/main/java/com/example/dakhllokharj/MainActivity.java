@@ -17,6 +17,7 @@ import com.example.dakhllokharj.database.Receipt;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
@@ -45,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements
         //init recycler
         mAdapter = new ReceiptRecyclerAdapter(this, mReceipt);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
+//        linearLayoutManager.setReverseLayout(true);
+//        linearLayoutManager.setStackFromEnd(true);
         recycler_receipt.setLayoutManager(linearLayoutManager);
         recycler_receipt.setAdapter(mAdapter);
         //set data to recyclerView
@@ -57,8 +58,10 @@ public class MainActivity extends AppCompatActivity implements
                     mReceipt.clear();
                 }
                 if (receipts != null) {
+                    Collections.reverse(receipts);
                     mReceipt.addAll(receipts);
                 }
+                mAdapter.notifyDataSetChanged();
 
             }
         });
