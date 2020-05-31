@@ -9,12 +9,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.dakhllokharj.asyncTask.InsertAsyncTask;
 import com.example.dakhllokharj.database.MyDataBase;
 import com.example.dakhllokharj.database.Receipt;
+import com.example.dakhllokharj.util.utility;
 
-public class AddActivity extends AppCompatActivity {
+import java.text.DecimalFormat;
+
+public class AddActivity extends AppCompatActivity implements
+TextWatcher{
     //var
     MyDataBase myDataBase;
     // ui component
@@ -44,6 +49,7 @@ public class AddActivity extends AppCompatActivity {
 
     private void init() {
         myDataBase = MyDataBase.getInstance(this);
+        edt_amount.addTextChangedListener(this);
     }
 
     private void enableEditMode() {
@@ -67,12 +73,58 @@ public class AddActivity extends AppCompatActivity {
                     amount=amount*(-1);
                 }
                 new InsertAsyncTask(myDataBase.dao()).execute(new Receipt("mahdi", edt_title.getText().toString(),
-                        "", "", "", "",
+                        "", "", "", utility.getCurrentTime(),
                         amount));
                 disableEditMode();
                 onBackPressed();
                 break;
 
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        edt_amount.removeTextChangedListener(this);
+//
+//        String str = convertNumberToEnglish(s.toString());
+//        String str=edt_amount.getText().toString();
+//
+//        str = str.replace(",", "");
+//        if (str.length() > 0) {
+//            DecimalFormat sdd = new DecimalFormat("#,###,###,###");
+//            Double doubleNumber = Double.parseDouble(str);
+//
+//            String format = sdd.format(doubleNumber);
+//            edt_amount.setText(format);
+//            edt_amount.setSelection(format.length());
+//
+//        }
+//        edt_amount.addTextChangedListener(this);
+    }
+
+    public String convertNumberToEnglish(String num) {
+        String d = num;
+        d = d.replace("۰", "0");
+        d = d.replace("۱", "1");
+        d = d.replace("۲", "2");
+        d = d.replace("٣", "3");
+        d = d.replace("٤", "4");
+        d = d.replace("۵", "5");
+        d = d.replace("٦", "6");
+        d = d.replace("٧", "7");
+        d = d.replace("۸", "8");
+        d = d.replace("۹", "9");
+
+        return d;
     }
 }

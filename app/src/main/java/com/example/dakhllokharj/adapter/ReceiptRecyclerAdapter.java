@@ -37,6 +37,10 @@ public class ReceiptRecyclerAdapter extends RecyclerView.Adapter<ReceiptRecycler
         Receipt receipt=data.get(position);
         holder.txt_title.setText(receipt.getTitle());
         holder.txt_amount.setText(""+receipt.getAmount());
+        if (receipt.getTimeStamp()!=null)
+        holder.txt_timeStamp.setText(""+receipt.getTimeStamp());
+        else
+            holder.txt_amount.setText("null");
 
     }
 
@@ -46,11 +50,12 @@ public class ReceiptRecyclerAdapter extends RecyclerView.Adapter<ReceiptRecycler
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_title,txt_amount;
+        TextView txt_title,txt_amount,txt_timeStamp;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_title = itemView.findViewById(R.id.txt_title);
             txt_amount = itemView.findViewById(R.id.txt_amount);
+            txt_timeStamp = itemView.findViewById(R.id.txt_timeStamp);
 
         }
     }

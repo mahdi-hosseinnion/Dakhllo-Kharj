@@ -14,6 +14,8 @@ public interface Dao {
     long[] insertReceipt(Receipt... receipts);
     @Query("SELECT * FROM mainTransaction")
     LiveData<List<Receipt>>getAllReceipt();
+    @Query("SELECT amount FROM mainTransaction")
+    List<Integer>getAllAmounts();
     @Update
     int updateReceipt(Receipt... receipts);
     @Delete

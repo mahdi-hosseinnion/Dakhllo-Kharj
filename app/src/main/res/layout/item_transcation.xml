@@ -8,12 +8,17 @@
         android:id="@+id/txt_title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="50" />
+        android:layout_weight="33" />
 
     <TextView
         android:id="@+id/txt_amount"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="50" />
+        android:layout_weight="33" />
+    <TextView
+        android:id="@+id/txt_timeStamp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="33" />
 
 </LinearLayout>
