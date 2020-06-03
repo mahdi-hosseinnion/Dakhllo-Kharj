@@ -1,18 +1,11 @@
 package com.example.dakhllokharj;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import com.example.dakhllokharj.adapter.ReceiptRecyclerAdapter;
@@ -28,10 +21,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class MainActivity extends AppCompatActivity implements
-        FloatingActionButton.OnClickListener ,
-        TaskDelegate
-         {
+        FloatingActionButton.OnClickListener,
+        TaskDelegate {
     //var
     private static final String TAG = "MainActivity";
     MyDataBase myDataBase;
@@ -49,7 +46,12 @@ public class MainActivity extends AppCompatActivity implements
         findViews();
         init();
 
+
+
     }
+
+
+
 
     private void init() {
         //init data base
@@ -82,30 +84,30 @@ public class MainActivity extends AppCompatActivity implements
     private void findViews() {
         recycler_receipt = findViewById(R.id.recycler_receipt);
         txt_mojodi = findViewById(R.id.txt_mojodi);
-        fab_add=findViewById(R.id.fab_add);
+        fab_add = findViewById(R.id.fab_add);
         fab_add.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(this,AddActivity.class));
+        startActivity(new Intent(this, AddActivity.class));
     }
 
     @Override
     protected void onResume() {
-        new GetAmountsAsyncTask(myDataBase.dao(),this).execute();
+        new GetAmountsAsyncTask(myDataBase.dao(), this).execute();
         super.onResume();
     }
 
     @Override
     public void onAmountsRetrieved(int sum) {
-        NumberFormat formatter =new DecimalFormat("#,###,###,###");
-        if (sum<0){
+        NumberFormat formatter = new DecimalFormat("#,###,###,###");
+        if (sum < 0) {
             txt_mojodi.setTextColor(Color.RED);
-        }else
+        } else
             txt_mojodi.setTextColor(Color.WHITE);
-        txt_mojodi.setText("موجودی\n"+formatter.format(sum));
+        txt_mojodi.setText("موجودی شما \n" + formatter.format(sum));
     }
 
 

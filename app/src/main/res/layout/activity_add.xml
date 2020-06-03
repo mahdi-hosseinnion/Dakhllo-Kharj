@@ -21,57 +21,112 @@
         android:id="@+id/edt_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_margin="8dp"
+
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="عنوان"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBar_main" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <EditText
         android:id="@+id/edt_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_margin="8dp"
         android:ems="10"
-        android:inputType="number"
         android:hint="مبلغ"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_title" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:checkedButton="@id/rab_withdraw"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_amount">
+        app:layout_constraintTop_toBottomOf="@+id/appBar_main">
 
         <RadioButton
             android:id="@+id/rab_withdraw"
 
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="برداشت" />
+            android:padding="16dp"
+            android:text="برداشت"
+            android:textSize="22sp" />
+
+
 
         <RadioButton
             android:id="@+id/rab_deposit"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="واریز" />
+
+
+            android:padding="16dp"
+            android:text="واریز"
+
+            android:textSize="22sp" />
 
     </RadioGroup>
+
+    <EditText
+        android:id="@+id/edt_subTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+
+        android:ems="10"
+        android:hint="توضیحات"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_person" />
+
+    <EditText
+        android:id="@+id/edt_person"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+
+        android:ems="10"
+        android:hint="نام خرج کننده"
+        android:inputType="textPersonName"
+        android:text="مهدی"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actxt_category" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actxt_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+
+        android:hint="دسته بندی "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imb_addCate"
+        app:layout_constraintTop_toBottomOf="@+id/edt_amount" />
+
+    <ImageButton
+        android:layout_margin="8dp"
+
+        android:id="@+id/imb_addCate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/actxt_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/actxt_category"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

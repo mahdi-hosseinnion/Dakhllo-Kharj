@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "ad32588eef25f17f203217319ac4e87b",
+    "version": 2,
+    "identityHash": "dea6963860a0ef6c9254ca114dd59531",
     "entities": [
       {
         "tableName": "mainTransaction",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `person` TEXT, `title` TEXT, `subTitle` TEXT, `category` TEXT, `subCategory` TEXT, `timeStamp` TEXT, `amount` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `person` TEXT, `title` TEXT, `subTitle` TEXT, `category` TEXT, `specificTime` TEXT, `dayTime` TEXT, `amount` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -39,14 +39,14 @@
             "notNull": false
           },
           {
-            "fieldPath": "subCategory",
-            "columnName": "subCategory",
+            "fieldPath": "specificTime",
+            "columnName": "specificTime",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "timeStamp",
-            "columnName": "timeStamp",
+            "fieldPath": "dayTime",
+            "columnName": "dayTime",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -102,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ad32588eef25f17f203217319ac4e87b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dea6963860a0ef6c9254ca114dd59531')"
     ]
   }
 }

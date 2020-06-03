@@ -1,7 +1,6 @@
 package com.example.dakhllokharj.adapter;
 
 import android.content.Context;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 import com.example.dakhllokharj.R;
 import com.example.dakhllokharj.database.Receipt;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -37,8 +35,8 @@ public class ReceiptRecyclerAdapter extends RecyclerView.Adapter<ReceiptRecycler
         Receipt receipt=data.get(position);
         holder.txt_title.setText(receipt.getTitle());
         holder.txt_amount.setText(""+receipt.getAmount());
-        if (receipt.getTimeStamp()!=null)
-        holder.txt_timeStamp.setText(""+receipt.getTimeStamp());
+        if (receipt.getDayTime()!=null)
+        holder.txt_timeStamp.setText(receipt.getDayTime()+"-"+receipt.getSpecificTime());
         else
             holder.txt_amount.setText("null");
 

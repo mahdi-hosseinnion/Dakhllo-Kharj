@@ -3,13 +3,11 @@ package com.example.dakhllokharj.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "mainTransaction")
-public class Receipt implements Parcelable {
+public class Receipt  implements Parcelable{
     //if does not run use column info
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -17,19 +15,20 @@ public class Receipt implements Parcelable {
     private String title;
     private String subTitle;
     private String category;
-    private String subCategory;
-    private String timeStamp;
+    private String specificTime;
+    private String dayTime;
     private int amount;
 
-    public Receipt( String person, String title, String subTitle, String category, String subCategory, String timeStamp, int amount) {
+    public Receipt( String person, String title, String subTitle, String category, String specificTime, String dayTime, int amount) {
         this.person = person;
         this.title = title;
         this.subTitle = subTitle;
         this.category = category;
-        this.subCategory = subCategory;
-        this.timeStamp = timeStamp;
+        this.specificTime = specificTime;
+        this.dayTime = dayTime;
         this.amount = amount;
     }
+
 
     protected Receipt(Parcel in) {
         id = in.readInt();
@@ -37,8 +36,8 @@ public class Receipt implements Parcelable {
         title = in.readString();
         subTitle = in.readString();
         category = in.readString();
-        subCategory = in.readString();
-        timeStamp = in.readString();
+        specificTime = in.readString();
+        dayTime = in.readString();
         amount = in.readInt();
     }
 
@@ -94,20 +93,20 @@ public class Receipt implements Parcelable {
         this.category = category;
     }
 
-    public String getSubCategory() {
-        return subCategory;
+    public String getSpecificTime() {
+        return specificTime;
     }
 
-    public void setSubCategory(String subCategory) {
-        this.subCategory = subCategory;
+    public void setSpecificTime(String specificTime) {
+        this.specificTime = specificTime;
     }
 
-    public String getTimeStamp() {
-        return timeStamp;
+    public String getDayTime() {
+        return dayTime;
     }
 
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setDayTime(String dayTime) {
+        this.dayTime = dayTime;
     }
 
     public int getAmount() {
@@ -117,6 +116,7 @@ public class Receipt implements Parcelable {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
 
     @Override
     public int describeContents() {
@@ -130,8 +130,8 @@ public class Receipt implements Parcelable {
         dest.writeString(title);
         dest.writeString(subTitle);
         dest.writeString(category);
-        dest.writeString(subCategory);
-        dest.writeString(timeStamp);
+        dest.writeString(specificTime);
+        dest.writeString(dayTime);
         dest.writeInt(amount);
     }
 }

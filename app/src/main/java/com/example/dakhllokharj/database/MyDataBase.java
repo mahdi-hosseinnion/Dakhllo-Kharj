@@ -9,7 +9,7 @@ import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
-@Database(entities = {Receipt.class},version = 1)
+@Database(entities = {Receipt.class, Category.class},version = 2)
 public abstract class MyDataBase extends RoomDatabase {
     public static final String DATABASE_NAME="mainDB";
     private static MyDataBase instance;
