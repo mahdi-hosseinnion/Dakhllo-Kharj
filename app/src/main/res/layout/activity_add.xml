@@ -104,10 +104,10 @@
         android:text="مهدی"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actxt_category" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_category" />
 
-    <AutoCompleteTextView
-        android:id="@+id/actxt_category"
+    <Spinner
+        android:id="@+id/spinner_category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -119,13 +119,13 @@
 
     <ImageButton
         android:layout_margin="8dp"
-
+        android:onClick="onClickAddActivity"
         android:id="@+id/imb_addCate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/actxt_category"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner_category"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/actxt_category"
+        app:layout_constraintTop_toTopOf="@+id/spinner_category"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 

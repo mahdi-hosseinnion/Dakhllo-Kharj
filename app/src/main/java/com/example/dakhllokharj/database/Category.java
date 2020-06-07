@@ -1,6 +1,7 @@
 package com.example.dakhllokharj.database;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "category")
@@ -9,7 +10,7 @@ public class Category {
     private int id;
     private String category;
     //what category is sub of with id
-    private int subOf;
+    private int countOfUsage;
 
     public void setId(int id) {
         this.id = id;
@@ -19,8 +20,8 @@ public class Category {
         this.category = category;
     }
 
-    public void setSubOf(int subOf) {
-        this.subOf = subOf;
+    public void setCountOfUsage(int countOfUsage) {
+        this.countOfUsage = countOfUsage;
     }
 
     public int getId() {
@@ -31,15 +32,17 @@ public class Category {
         return category;
     }
 
-    public int getSubOf() {
-        return subOf;
+    public int getCountOfUsage() {
+        return countOfUsage;
     }
 
-
-
-    public Category( String category, int subOf) {
-
+    public Category(String category) {
         this.category = category;
-        this.subOf = subOf;
+    }
+    @Ignore
+    public Category(String category, int countOfUsage) {
+
+        this(category);
+        this.countOfUsage = countOfUsage;
     }
 }
