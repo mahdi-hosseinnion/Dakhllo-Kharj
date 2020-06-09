@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
-@Database(entities = {Receipt.class, Category.class},version = 3)
+@Database(entities = {Receipt.class, Category.class},version = 4)
 public abstract class MyDataBase extends RoomDatabase {
     public static final String DATABASE_NAME="mainDB";
     private static MyDataBase instance;

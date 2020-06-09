@@ -4,10 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "mainTransaction")
-public class Receipt  implements Parcelable{
+public class Receipt implements Parcelable {
     //if does not run use column info
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -19,7 +20,7 @@ public class Receipt  implements Parcelable{
     private String dayTime;
     private int amount;
 
-    public Receipt( String person, String title, String subTitle, String category, String specificTime, String dayTime, int amount) {
+    public Receipt(String person, String title, String subTitle, String category, String specificTime, String dayTime, int amount) {
         this.person = person;
         this.title = title;
         this.subTitle = subTitle;
@@ -28,7 +29,9 @@ public class Receipt  implements Parcelable{
         this.dayTime = dayTime;
         this.amount = amount;
     }
-
+    @Ignore
+    public Receipt() {
+    }
 
     protected Receipt(Parcel in) {
         id = in.readInt();

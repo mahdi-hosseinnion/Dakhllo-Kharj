@@ -3,6 +3,9 @@ package com.example.dakhllokharj;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.dakhllokharj.asyncTask.InsertAsyncTask;
 import com.example.dakhllokharj.asyncTask.InsertCategoryAsyncTask;
@@ -31,7 +35,7 @@ public class AddActivity extends AppCompatActivity implements
     //var
     MyDataBase myDataBase;
     ArrayAdapter<String> autocompletetxtAdapter;
-    List<String> arrayList=new ArrayList<>();
+    List<String> arrayList = new ArrayList<>();
 
     // ui component
     EditText edt_title, edt_amount, edt_person, edt_subTitle;
@@ -49,17 +53,18 @@ public class AddActivity extends AppCompatActivity implements
         initAutoCompletetextView();
         subscribeToCategoryLiveData();
     }
-    private void subscribeToCategoryLiveData(){
+
+    private void subscribeToCategoryLiveData() {
         myDataBase.dao().getAllCategories().observe(this, new Observer<List<Category>>() {
             @Override
             public void onChanged(final List<Category> categories1) {
                 arrayList.clear();
-                for (Category category:categories1) {
+                for (Category category : categories1) {
                     arrayList.add(category.getCategory());
                 }
                 //notify data changed
-                autocompletetxtAdapter=null;
-                autocompletetxtAdapter= new ArrayAdapter<>(AddActivity.this,
+                autocompletetxtAdapter = null;
+                autocompletetxtAdapter = new ArrayAdapter<>(AddActivity.this,
                         android.R.layout.simple_dropdown_item_1line, arrayList);
                 autoCompleteTextView.setAdapter(autocompletetxtAdapter);
 
@@ -67,8 +72,20 @@ public class AddActivity extends AppCompatActivity implements
         });
 
     }
+
     private void initAutoCompletetextView() {
-         autoCompleteTextView =  findViewById(R.id.actxt_category);
+        autoCompleteTextView = findViewById(R.id.actxt_category);
+//         autoCompleteTextView.addTextChangedListener(this);
+//        autoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    printLog("had focus");
+//                } else {
+//                    printLog("not focus");
+//                }
+//            }
+//        });
         autoCompleteTextView.setThreshold(1);
 
         autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
@@ -77,15 +94,10 @@ public class AddActivity extends AppCompatActivity implements
                 autoCompleteTextView.showDropDown();
             }
         });
-        findViewById(R.id.imb_addCate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: runned");
-                new InsertCategoryAsyncTask(myDataBase.dao()).execute(new Category(autoCompleteTextView.getText().toString(),0));
-            }
-        });
+//
 
     }
+
     private void findViews() {
         edt_title = findViewById(R.id.edt_title);
         edt_amount = findViewById(R.id.edt_amount);
@@ -120,19 +132,34 @@ public class AddActivity extends AppCompatActivity implements
                 onBackPressed();
                 break;
             case R.id.imb_done:
-                int amount = Integer.parseInt(edt_amount.getText().toString());
-                if (rab_withdraw.isChecked()) {
-                    amount = amount * (-1);
+                if (edt_title.getText().toString().isEmpty()) {
+                    edt_title.setError("لطفا عنوانی را وارد کنید.");
+                } else if (edt_amount.getText().toString().isEmpty())
+                    edt_amount.setError("لطفا مبلقی را وارد کنید.");
+                else if (!arrayList.contains(autoCompleteTextView.getText().toString())) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this)
+                            .setTitle("دخل و خرج")
+                            .setMessage("ایا میخواهید این دسته بندی ایجاد شود؟" + "\n" + "دسته بندی به نام '" + autoCompleteTextView.getText().toString() + "' وجود ندارد!")
+                            .setPositiveButton("بله", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    new InsertCategoryAsyncTask(myDataBase.dao()).execute(new Category(autoCompleteTextView.getText().toString(), 0));
+                                    setDataToDataBase();
+                                }
+                            })
+                            .setNegativeButton("خیر", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    autoCompleteTextView.requestFocus();
+                                    dialog.cancel();
+                                    dialog.dismiss();
+                                }
+                            });
+                    alert.create();
+                    alert.show();
+                } else {
+                    setDataToDataBase();
                 }
-                new InsertAsyncTask(myDataBase.dao()).execute(new Receipt(edt_person.getText().toString(),
-                        edt_title.getText().toString(),
-                        edt_subTitle.getText().toString(),
-                        "Any",
-                        Utility.getCurrentTime(),
-                        ShamsiTarikh.getCurrentShamsidate(),
-                        amount));
-                disableEditMode();
-                onBackPressed();
                 break;
 
         }
@@ -150,7 +177,11 @@ public class AddActivity extends AppCompatActivity implements
 
     @Override
     public void afterTextChanged(Editable s) {
-        edt_amount.removeTextChangedListener(this);
+//        if (arrayList.contains(s.toString())){
+//            Toast.makeText(this, "yea", Toast.LENGTH_SHORT).show();
+//        }else
+//            Toast.makeText(this, "not", Toast.LENGTH_SHORT).show();
+
 //
 //        String str = convertNumberToEnglish(s.toString());
 //        String str=edt_amount.getText().toString();
@@ -182,5 +213,25 @@ public class AddActivity extends AppCompatActivity implements
         d = d.replace("۹", "9");
 
         return d;
+    }
+
+    private void setDataToDataBase() {
+        int amount = Integer.parseInt(edt_amount.getText().toString());
+        if (rab_withdraw.isChecked()) {
+            amount = amount * (-1);
+        }
+        new InsertAsyncTask(myDataBase.dao()).execute(new Receipt(edt_person.getText().toString(),
+                edt_title.getText().toString(),
+                edt_subTitle.getText().toString(),
+                autoCompleteTextView.getText().toString(),
+                Utility.getCurrentTime(),
+                ShamsiTarikh.getCurrentShamsidate(),
+                amount));
+        disableEditMode();
+        onBackPressed();
+    }
+
+    private void printLog(String text) {
+        Log.d(TAG, ".....................................: " + text);
     }
 }

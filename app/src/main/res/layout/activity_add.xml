@@ -24,7 +24,7 @@
         android:layout_margin="8dp"
 
         android:ems="10"
-        android:hint="عنوان"
+        android:hint="*عنوان"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:ems="10"
-        android:hint="مبلغ"
+        android:hint="*مبلغ"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,19 +114,10 @@
 
         android:hint="دسته بندی "
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imb_addCate"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_amount" />
 
-    <ImageButton
-        android:layout_margin="8dp"
 
-        android:id="@+id/imb_addCate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/actxt_category"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/actxt_category"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
