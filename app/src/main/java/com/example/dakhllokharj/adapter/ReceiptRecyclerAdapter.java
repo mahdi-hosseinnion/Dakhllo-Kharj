@@ -21,7 +21,7 @@ public class ReceiptRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private static final String TAG = "ReceiptRecyclerAdapter";
     private static final int RECEIPT_TYPE = 1703;
     private static final int HEADER_TYPE = 1422;
-    public static final String HEADER_TITLE="ITS HEADER.45649";
+    public static final String HEADER_TITLE = "ITS HEADER.45649";
     private List<Receipt> mReceipt;
     private OnReceiptListener mOnReceiptListener;
 
@@ -50,7 +50,8 @@ public class ReceiptRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         Receipt receipt = mReceipt.get(position);
         int viewType = getItemViewType(position);
         if (viewType == RECEIPT_TYPE) {
-            ((ViewHolder) holder).txt_title.setText(receipt.getTitle());
+//            ((ViewHolder) holder).txt_title.setText(receipt.getTitle());
+            ((ViewHolder) holder).txt_title.setText(receipt.getDayTime());
             ((ViewHolder) holder).txt_category.setText(receipt.getCategory());
             NumberFormat formatter = new DecimalFormat("#,###,###,###");
             ((ViewHolder) holder).txt_amount.setText("" + formatter.format(receipt.getAmount()));
@@ -60,17 +61,27 @@ public class ReceiptRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 //            else
 //                ((ViewHolder) holder).txt_amount.setText("null");
         } else {
-            ((DayHeaderViewHolder)holder).txt_date.setText(receipt.getDayTime());
-            ((DayHeaderViewHolder)holder).txt_expenses.setText("Expenses: "+receipt.getAmount());
-            ((DayHeaderViewHolder)holder).txt_income.setText("Income: "+receipt.getCategory());
+            ((DayHeaderViewHolder) holder).txt_date.setText(receipt.getDayTime());
+            if (receipt.getAmount() > 0) {
+                ((DayHeaderViewHolder) holder).txt_expenses.setText("Expenses: " + receipt.getAmount());
+                ((DayHeaderViewHolder) holder).txt_expenses.setVisibility(View.VISIBLE);
+            }else
+                ((DayHeaderViewHolder) holder).txt_expenses.setVisibility(View.GONE);
+
+            if ((Integer.parseInt(receipt.getCategory())) > 0) {
+                ((DayHeaderViewHolder) holder).txt_income.setText("Income: " + receipt.getCategory());
+                ((DayHeaderViewHolder) holder).txt_expenses.setVisibility(View.VISIBLE);
+            }else
+                ((DayHeaderViewHolder) holder).txt_income.setVisibility(View.GONE);
+
         }
     }
 
     @Override
     public int getItemCount() {
-        if (mReceipt != null){
+        if (mReceipt != null) {
 
-            Log.d(TAG, "getItemCount: size = "+mReceipt.size());
+            Log.d(TAG, "getItemCount: size = " + mReceipt.size());
             return mReceipt.size();
         }
         return 0;
@@ -79,9 +90,9 @@ public class ReceiptRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
-        if (mReceipt.get(position).getTitle().equals(HEADER_TITLE)){
+        if (mReceipt.get(position).getTitle().equals(HEADER_TITLE)) {
             return HEADER_TYPE;
-        }else
+        } else
             return RECEIPT_TYPE;
 
     }

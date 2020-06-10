@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="56dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:elevation="15dp"
+    android:elevation="4dp"
     app:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout

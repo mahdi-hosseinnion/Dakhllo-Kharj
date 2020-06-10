@@ -76,14 +76,16 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onChanged(List<Receipt> receipts) {
                 if (receipts != null && receipts.size() > 0) {
-                    Log.d(TAG, "onChanged: size in observer "+receipts.size());
+                    Log.d(TAG, "onChanged: size in observer " + receipts.size());
                     if (mReceipt.size() > 0) {
                         mReceipt.clear();
                     }
                     if (receipts != null) {
                         //TODO uncomment this line
 //                        Collections.reverse(receipts);
-                        mReceipt.addAll(setHeaders(receipts));
+                        List<Receipt> newList=new ArrayList<>(setHeaders(receipts));
+                        Collections.reverse(newList);
+                        mReceipt.addAll(newList);
                     }
                     mAdapter.notifyDataSetChanged();
                 }
@@ -94,19 +96,32 @@ public class MainActivity extends AppCompatActivity implements
 
     private List<Receipt> setHeaders(List<Receipt> receiptList) {
         String startDay = "01";
-        String nowDate="00";
+        String nowDate = "00";
+        boolean headerAdded = true;
+        int lastIndexOfHeader=0;
         List<Receipt> result = new ArrayList<>();
+
         for (int i = 0; i < receiptList.size(); i++) {
 //1399/03/17
-            if (receiptList.get(i).getDayTime().substring(5, 7).equals(startDay)) {
+            if (headerAdded && !receiptList.get(i).getDayTime().substring(8, 10).equals(startDay))
+                for (int a = 1; a <= 31; a++) {
+                    String findDay = "";
+                    findDay = a < 10 ? "0" + String.valueOf(a) : String.valueOf(a);
+                    if (receiptList.get(i).getDayTime().substring(8,10).equals(findDay)) {
+                        startDay = findDay;
+                        break;
+                    }
+                }
+            if (receiptList.get(i).getDayTime().substring(8,10).equals(startDay)) {
                 result.add(receiptList.get(i));
-                nowDate=receiptList.get(i).getDayTime().substring(6);
+                nowDate = receiptList.get(i).getDayTime().substring(6);
+                headerAdded = false;
             } else {
                 Receipt receipt1 = new Receipt();
                 receipt1.setTitle(ReceiptRecyclerAdapter.HEADER_TITLE);
                 int income = 0;
                 int expenses = 0;
-                for (int j = 0; j <= i; j++) {
+                for (int j = lastIndexOfHeader; j < i; j++) {
                     int amount = receiptList.get(j).getAmount();
                     if (amount > 0) {
                         //+ positive(income)
@@ -115,17 +130,58 @@ public class MainActivity extends AppCompatActivity implements
                         //- negative (expenses)
                         expenses += (amount * -1);
                     }
+
                 }
+
+                lastIndexOfHeader=new Integer(i);
                 receipt1.setAmount(expenses);
                 receipt1.setCategory(String.valueOf(income));
                 receipt1.setDayTime(nowDate);
-                nowDate="";
-                startDay=receiptList.get(i).getDayTime().substring(5, 7);
-                result.add(receipt1);
+                //
 
+
+                //
+//                nowDate = "";
+                nowDate = receiptList.get(i).getDayTime().substring(6);
+                startDay = receiptList.get(i).getDayTime().substring(8, 10);
+                result.add(receipt1);
+                headerAdded = true;
+                result.add(receiptList.get(i));
             }
         }
-        Log.d(TAG, "setHeaders: size in result "+result.size());
+        //add new
+        Receipt receipt1 = new Receipt();
+        receipt1.setTitle(ReceiptRecyclerAdapter.HEADER_TITLE);
+        int income = 0;
+        int expenses = 0;
+        for (int j = lastIndexOfHeader; j <receiptList.size() ; j++) {
+            int amount = receiptList.get(j).getAmount();
+            if (amount > 0) {
+                //+ positive(income)
+                income += amount;
+            } else {
+                //- negative (expenses)
+                expenses += (amount * -1);
+            }
+
+        }
+
+
+        receipt1.setAmount(expenses);
+        receipt1.setCategory(String.valueOf(income));
+        receipt1.setDayTime(nowDate);
+        //
+
+
+        //
+//                nowDate = "";
+//        nowDate = receiptList.get(i).getDayTime().substring(6);
+//        startDay = receiptList.get(i).getDayTime().substring(8, 10);
+        result.add(receipt1);
+        headerAdded = true;
+//        result.add(receiptList.get(i));
+
+        Log.d(TAG, "setHeaders: size in result " + result.size());
         return result;
     }
 
